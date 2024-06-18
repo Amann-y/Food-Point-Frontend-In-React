@@ -18,7 +18,7 @@ const PrivateComponent = () => {
           "Content-Type": "application/json",
         };
         const response = await axios.get(
-          "https://food-point-frontend-in-react.vercel.app/api/v1/user/logged-user",
+          "https://food-point-backend-api-s.onrender.com/api/v1/user/logged-user",
           { headers }
         );
         setIsAdmin(response.data.user.isAdmin);
