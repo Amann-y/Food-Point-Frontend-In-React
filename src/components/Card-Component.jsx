@@ -23,7 +23,7 @@ const CardComponent = ({ setStateChange, ...ele }) => {
       };
 
       const response = await axios.delete(
-        `http://localhost:5500/api/v1/food/delete-item/${id}`,
+        `https://food-point-backend-api-s.onrender.com/api/v1/food/delete-item/${id}`,
         { headers }
       );
 
@@ -43,7 +43,6 @@ const CardComponent = ({ setStateChange, ...ele }) => {
 
   return (
     <>
-    
       <Card className="my-2 h-100">
         <Card.Img
           variant="top"
