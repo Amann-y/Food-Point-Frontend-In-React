@@ -36,7 +36,7 @@ function NavbarComponent() {
         "Content-Type": "application/json",
       };
       const user_detail = await axios.get(
-        "http://localhost:5500/api/v1/user/logged-user",
+        "https://food-point-backend-api-s.onrender.com/api/v1/user/logged-user",
         { headers }
       );
 
