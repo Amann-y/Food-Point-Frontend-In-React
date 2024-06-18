@@ -33,7 +33,7 @@ const PrivateComponent = () => {
   }, []);
 
   useEffect(() => {
-    console.log("isAdmin1:", isAdmin);
+    // console.log("isAdmin1:", isAdmin);
   }, [isAdmin]);
 
   // console.log("Final isAdmin:", isAdmin); // Check the isAdmin state before return
