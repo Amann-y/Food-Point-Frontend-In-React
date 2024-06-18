@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, Navigate } from "react-router-dom";
 import axios from "axios";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const PrivateComponent = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -18,12 +18,12 @@ const PrivateComponent = () => {
           "Content-Type": "application/json",
         };
         const response = await axios.get(
-          "http://localhost:5500/api/v1/user/logged-user",
+          "https://food-point-frontend-in-react.vercel.app//api/v1/user/logged-user",
           { headers }
         );
         setIsAdmin(response.data.user.isAdmin);
       } catch (error) {
-        toast.error(error?.response?.data?.message)
+        toast.error(error?.response?.data?.message);
       } finally {
         setLoading(false);
       }
@@ -55,6 +55,3 @@ const PrivateComponent = () => {
 };
 
 export default PrivateComponent;
-
-
-
