@@ -83,9 +83,9 @@ const OrderHistory = () => {
                 xs={12}
                 md={6}
                 lg={4}
-                className="justify-content-center"
+                className="justify-content-center my-2"
               >
-                <Card className="my-2 h-100">
+                <Card className="my-1 h-100">
                   <Card.Img
                     variant="top"
                     src={ele.imgURL}

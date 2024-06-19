@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import CarouselComponent from "../utils/CarouselComponent";
+import Spinner from "react-bootstrap/Spinner";
 
 const Home = () => {
   const [foodData, setFoodData] = useState([]);
@@ -35,23 +36,24 @@ const Home = () => {
     e.preventDefault();
   };
 
-  const handleSearchChange = (e)=>{
-    setFilteredData(e.target.value)
-    const data = foodData?.filter((ele) => ele.name.toLowerCase().includes(e.target.value.toLowerCase()));
-    if(e.target.value==""){
-      setFoodData(copyFoodData)
-    }else{
-      setFoodData(data)
+  const handleSearchChange = (e) => {
+    setFilteredData(e.target.value);
+    const data = foodData?.filter((ele) =>
+      ele.name.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    if (e.target.value == "") {
+      setFoodData(copyFoodData);
+    } else {
+      setFoodData(data);
     }
-    
-  }
+  };
 
   return (
     <>
       <CarouselComponent />
       <Container>
         <div className="container my-2 my-md-4">
-          {foodData.length<=0 && <h2>No Food Item Found</h2>}
+          {foodData.length <= 0 &&    <div className="d-flex mb-2 justify-content-center align-items-center"><Spinner animation="border" variant="info" size={"md"} /></div>}
           <Form className="d-flex" onSubmit={handleSearchSubmit}>
             <Form.Control
               type="search"
@@ -61,7 +63,6 @@ const Home = () => {
               value={filteredData}
               onChange={(e) => handleSearchChange(e)}
             />
-           
           </Form>
         </div>
         <Row className="py-2">
@@ -81,7 +82,7 @@ const Home = () => {
             })
           ) : (
             <Col xs={12}>
-              <h2>No Food Data Available</h2>
+              <h2>No Item Available</h2>
             </Col>
           )}
         </Row>
