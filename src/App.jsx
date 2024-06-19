@@ -17,6 +17,7 @@ import Address from "./pages/Address"
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import OrderHistory from "./pages/OrderHistory";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   return (
@@ -39,6 +40,8 @@ const App = () => {
           <Route path="/address" element={<Address/>}/>
           <Route path="/orderHistory" element={<OrderHistory/>}/>
         </Route>
+
+        <Route path="*" element={<NotFound />} />
 
       </Routes>
       <Footer />
