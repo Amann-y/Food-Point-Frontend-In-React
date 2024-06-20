@@ -87,7 +87,7 @@ const Login = () => {
         </Form.Group>
 
         <Button variant="secondary" type="submit" disabled={freeze}>
-          {freeze ? "Logging..." : "Login"}
+          {freeze ? "Login..." : "Login"}
         </Button>
       </Form>
     </section>
