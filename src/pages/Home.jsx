@@ -15,6 +15,7 @@ const Home = () => {
   const [copyFoodData, setCopyFoodData] = useState([]);
   const [stateChange, setStateChange] = useState(false);
   const [filteredData, setFilteredData] = useState("");
+  const [loading, setLoading] = useState(true); // Add loading state
 
   const fetchFoodData = async () => {
     try {
@@ -23,8 +24,10 @@ const Home = () => {
       );
       setFoodData(response?.data?.data);
       setCopyFoodData(response?.data?.data);
+      setLoading(false); // Set loading to false after data is fetched
     } catch (error) {
       toast.error(error.message);
+      setLoading(false); // Also set loading to false in case of error
     }
   };
 
@@ -37,15 +40,12 @@ const Home = () => {
   };
 
   const handleSearchChange = (e) => {
-    setFilteredData(e.target.value);
-    const data = foodData?.filter((ele) =>
-      ele.name.toLowerCase().includes(e.target.value.toLowerCase())
+    const searchTerm = e.target.value;
+    setFilteredData(searchTerm);
+    const data = copyFoodData.filter((ele) =>
+      ele.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    if (e.target.value == "") {
-      setFoodData(copyFoodData);
-    } else {
-      setFoodData(data);
-    }
+    setFoodData(data);
   };
 
   return (
@@ -53,37 +53,54 @@ const Home = () => {
       <CarouselComponent />
       <Container>
         <div className="container my-2 my-md-4">
-          {foodData.length <= 0 &&    <div className="d-flex mb-2 justify-content-center align-items-center"><Spinner animation="border" variant="info" size={"md"} /></div>}
-          <Form className="d-flex" onSubmit={handleSearchSubmit}>
-            <Form.Control
-              type="search"
-              placeholder="Search Food Item"
-              className="me-2"
-              aria-label="Search"
-              value={filteredData}
-              onChange={(e) => handleSearchChange(e)}
-            />
-          </Form>
+          {loading &&
+            foodData.length === 0 && ( // Display spinner only if loading and no data
+              <div className="d-flex mb-2 justify-content-center align-items-center">
+                <Spinner animation="border" variant="info" size="md" />
+              </div>
+            )}
+          {foodData.length === 0 &&
+            !loading && ( // Show no item found message
+              <>
+                {/* <h2>No Item Found</h2> */}
+                <Form className="d-flex" onSubmit={handleSearchSubmit}>
+                  <Form.Control
+                    type="search"
+                    placeholder="Search Food Item"
+                    className="me-2"
+                    aria-label="Search"
+                    value={filteredData}
+                    onChange={handleSearchChange}
+                  />
+                </Form>
+              </>
+            )}
+          {foodData.length > 0 && ( // Display search input when there are items
+            <Form className="d-flex" onSubmit={handleSearchSubmit}>
+              <Form.Control
+                type="search"
+                placeholder="Search Food Item"
+                className="me-2"
+                aria-label="Search"
+                value={filteredData}
+                onChange={handleSearchChange}
+              />
+            </Form>
+          )}
         </div>
         <Row className="py-2">
-          {foodData ? (
-            foodData.map((ele) => {
-              return (
-                <Col
-                  key={ele._id}
-                  xs={12}
-                  md={6}
-                  lg={4}
-                  className="justify-content-center my-2"
-                >
-                  <CardComponent setStateChange={setStateChange} {...ele} />
-                </Col>
-              );
-            })
-          ) : (
+          {foodData.length > 0 ? (
+            foodData.map((ele) => (
+              <Col key={ele._id} xs={12} md={6} lg={4} className="my-2">
+                <CardComponent setStateChange={setStateChange} {...ele} />
+              </Col>
+            ))
+          ) : foodData.length <= 0 && loading == false ? (
             <Col xs={12}>
-              <h2>No Item Available</h2>
+              <h2>No Item Found</h2>
             </Col>
+          ) : (
+            ""
           )}
         </Row>
       </Container>
